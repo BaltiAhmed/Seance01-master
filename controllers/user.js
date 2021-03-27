@@ -156,49 +156,6 @@ const deleteUser = async (req,res,next)=>{
 }
 
 
-const login = async (req,res,next)=>{
-    const error = validationResult(req);
-    if (!error.isEmpty()) {
-        return next
-            (new httpError('invalid input passed ', 422));
-
-    }
-
-    const {email,name}=req.body
-
-    let existingUser 
-
-    try {
-        existingUser = await user.findOne({email: email})
-    }catch{
-        return next
-            (new httpError('failed !!', 500));
-    }
-
-    if((!existingUser) || (existingUser.name !== name)){
-        return next
-            (new httpError('invalid input passed ', 422));
-    }
-
-    let token;
-    try {
-        token = jwt.sign(
-            { userId: existingUser.id, email: existingUser.email },
-            'secret-thinks',
-            { expiresIn: '1h' }
-        );
-
-    } catch (err) {
-        const error = new httpError('failed signup try again later', 500);
-        return next(error);
-
-    }
-
-
-    res.status(200).json({user:existingUser, token:token})
-     
-}
-
 
 
 
@@ -207,4 +164,4 @@ exports.signup=signup
 exports.getUser=getUser
 exports.updateUser=updateUser
 exports.deleteUser=deleteUser
-exports.login=login
+/* exports.login=login */

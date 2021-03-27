@@ -29,13 +29,13 @@ check('password')
 
 route.delete('/:id',userControllers.deleteUser)
 
-route.post('/login',
+/* route.post('/login',
 check('name')
 .not()
 .isEmpty(),
 check('email')
 .normalizeEmail()
-,userControllers.login)
+,userControllers.login) */
 
 
 
